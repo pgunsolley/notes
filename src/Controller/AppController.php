@@ -16,7 +16,9 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
+use App\Listener\CrudViewListener;
 use Cake\Controller\Controller;
+use Crud\Controller\ControllerTrait;
 
 /**
  * Application Controller
@@ -28,6 +30,8 @@ use Cake\Controller\Controller;
  */
 class AppController extends Controller
 {
+    use ControllerTrait;
+
     /**
      * Initialization hook method.
      *
@@ -45,5 +49,20 @@ class AppController extends Controller
         //$this->loadComponent('FormProtection');
         $this->loadComponent('Authentication.Authentication');
         $this->loadComponent('Authorization.Authorization');
+        $this->loadComponent('Crud.Crud', [
+            'actions' => [
+                'Crud.Index',
+                'Crud.View',
+                'Crud.Add',
+                'Crud.Edit',
+                'Crud.Delete',
+            ],
+            'listeners' => [
+                'CrudView.View',
+                'Crud.Redirect',
+                'Crud.RelatedModels',
+                CrudViewListener::class,
+            ],
+        ]);
     }
 }
