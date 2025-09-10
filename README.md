@@ -1,3 +1,3 @@
 # Notes
 
-## A simpe notes composition application
+## A simple notes composition application
