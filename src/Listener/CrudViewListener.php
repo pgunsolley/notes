@@ -38,6 +38,10 @@ class CrudViewListener extends BaseListener
     protected function manageSidebarNavigation()
     {
         $this->_action()->setConfig('scaffold.tables', ['notes', 'note_relationships']);
+        $this->_action()->setConfig('scaffold.sidebar_navigation', [
+            new MenuItem('Notes', ['_name' => 'notes:index']),
+            new MenuItem('NoteTree', ['_name' => 'note-tree:index']),
+        ]);
     }
 
     protected function manageUtilityNavigation()

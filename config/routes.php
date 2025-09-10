@@ -55,7 +55,7 @@ return function (RouteBuilder $routes) use ($crud): void {
         $routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'login']);
         $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'logout']);
         $routes->scope('/notes', ['_namePrefix' => 'notes:', 'controller' => 'Notes'], $crud());
-        $routes->scope('/relationships', ['_namePrefix' => 'relationships:', 'controller' => 'NoteRelationships'], $crud());
+        $routes->scope('/note-tree', ['_namePrefix' => 'note-tree:', 'controller' => 'NoteRelationships'], $crud());
     });
 
     // TODO: Create REST endpoints for reading notes

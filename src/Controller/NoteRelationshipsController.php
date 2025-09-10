@@ -23,9 +23,32 @@ class NoteRelationshipsController extends AppController
         $this->Crud->on('afterFind', function (EventInterface $event) use ($userId) {
             // TODO: Apply authorization check
         });
+
+        // FIXME: Not updating heading
+        $this->Crud->action()->setConfig('scaffold.action_name', 'NoteTree');
+        
         $actionName = $this->request->getParam('action');
+        if ($actionName === 'index') {
+            // FIXME: Not altering column names
+            $this->Crud->action()->setConfig('scaffold.fields', [
+                'note_a' => ['label' => 'Parent'],
+                'note_b' => ['label' => 'Child'],
+            ]);
+        }
         if (in_array($actionName, ['index', 'add'])) {
             $this->Authorization->skipAuthorization();
+        }
+        if (in_array($actionName, ['add', 'view', 'edit'])) {
+            $this->Crud->action()->setConfig('scaffold.fields', [
+                'note_a' => [
+                    'label' => 'Parent',
+                    'type' => 'select',
+                ],
+                'note_b' => [
+                    'label' => 'Child',
+                    'type' => 'select',
+                ],
+            ]);
         }
     }
 }

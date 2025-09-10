@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f252e6d375a5a465f6bb588d6e7c333",
+    "content-hash": "72179b3deff1ba91e28984301da76e28",
     "packages": [
         {
             "name": "cakephp/authentication",
@@ -640,16 +640,16 @@
         },
         {
             "name": "friendsofcake/crud-view",
-            "version": "0.51.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/FriendsOfCake/crud-view.git",
-                "reference": "adad112067d32b127cd921f612b6959a1783fe39"
+                "url": "https://github.com/pgunsolley/crud-view.git",
+                "reference": "376e0e606f4fd8f26dbed66be9dcf8abd1c7ec90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfCake/crud-view/zipball/adad112067d32b127cd921f612b6959a1783fe39",
-                "reference": "adad112067d32b127cd921f612b6959a1783fe39",
+                "url": "https://api.github.com/repos/pgunsolley/crud-view/zipball/376e0e606f4fd8f26dbed66be9dcf8abd1c7ec90",
+                "reference": "376e0e606f4fd8f26dbed66be9dcf8abd1c7ec90",
                 "shasum": ""
             },
             "require": {
@@ -662,26 +662,31 @@
                 "markstory/asset_compress": "^5.0",
                 "phpunit/phpunit": "^10.5.5 || ^11.1.3"
             },
+            "default-branch": true,
             "type": "cakephp-plugin",
             "autoload": {
                 "psr-4": {
                     "CrudView\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "CrudView\\Test\\": "tests"
+                }
+            },
             "license": [
                 "MIT"
             ],
             "authors": [
                 {
                     "name": "Christian Winther",
-                    "homepage": "http://cakephp.nu/",
-                    "role": "Author"
+                    "role": "Author",
+                    "homepage": "http://cakephp.nu/"
                 },
                 {
                     "name": "Jose Diaz-Gonzalez",
-                    "homepage": "http://josediazgonzalez.com/",
-                    "role": "Author"
+                    "role": "Author",
+                    "homepage": "http://josediazgonzalez.com/"
                 }
             ],
             "description": "View layer for CRUD",
@@ -699,12 +704,12 @@
                 "update"
             ],
             "support": {
-                "irc": "irc://irc.freenode.org/friendsofcake",
-                "issues": "https://github.com/FriendsOfCake/crud-view/issues",
                 "source": "https://github.com/FriendsOfCake/crud-view",
-                "wiki": "http://cakephp.nu/cakephp-crud/"
+                "issues": "https://github.com/FriendsOfCake/crud-view/issues",
+                "wiki": "http://cakephp.nu/cakephp-crud/",
+                "irc": "irc://irc.freenode.org/friendsofcake"
             },
-            "time": "2025-04-19T12:28:18+00:00"
+            "time": "2025-09-06T02:16:05+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
@@ -6386,7 +6391,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "friendsofcake/crud-view": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
