@@ -17,6 +17,7 @@ class CrudViewListener extends BaseListener
     {
         if ($this->_crud()->isActionMapped()) {
             $this->manageUtilityNavigation();
+            $this->manageSidebarNavigation();
         }
     }
 
@@ -25,6 +26,12 @@ class CrudViewListener extends BaseListener
         if ($this->_crud()->isActionMapped()) {
             $this->manageCrudViewClass();
         }
+    }
+
+    protected function manageSidebarNavigation()
+    {
+        // Omit users
+        $this->_action()->setConfig('scaffold.tables', ['notes']);
     }
 
     protected function manageUtilityNavigation()

@@ -29,10 +29,21 @@ use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 
-return function (RouteBuilder $routes): void {
+$crud = fn(array $ignored = []) =>
+    static function (RouteBuilder $routes) use ($ignored) {
+        $routes->connect('/', ['action' => 'index'], ['_name' => 'index']);
+        foreach (['add', 'edit', 'view', 'delete'] as $action) {
+            if (in_array($action, $ignored)) {
+                continue;
+            }
+            $routes->connect("/$action", compact('action'), ['_name' => $action]);
+        }
+    };
+
+return function (RouteBuilder $routes) use ($crud): void {
     $routes->setRouteClass(DashedRoute::class);
 
-    $routes->scope('/', function (RouteBuilder $routes): void {
+    $routes->scope('/', function (RouteBuilder $routes) use ($crud): void {
         $routes->registerMiddleware('csrf', new CsrfProtectionMiddleware(['httponly' => true]));
         $routes->registerMiddleware('app-authentication', new AuthenticationMiddleware(new AppAuthenticationServiceProvider()));
         $routes->registerMiddleware('app-authorization', new AuthorizationMiddleware(new AppAuthorizationServiceProvider()));
@@ -43,12 +54,8 @@ return function (RouteBuilder $routes): void {
         $routes->redirect('/', ['_name' => 'notes:index']);
         $routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'login']);
         $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'logout']);
-        $routes->scope('/notes', ['_namePrefix' => 'notes:', 'controller' => 'Notes'], static function (RouteBuilder $routes) {
-            $routes->connect('/', ['action' => 'index'], ['_name' => 'index']);
-            foreach (['add', 'edit', 'view', 'delete'] as $action) {
-                $routes->connect("/$action", compact('action'), ['_name' => $action]);
-            }
-        });
+        $routes->scope('/notes', ['_namePrefix' => 'notes:', 'controller' => 'Notes'], $crud());
+        $routes->scope('/relationships', ['_namePrefix' => 'relationships:', 'controller' => 'NoteRelationships'], $crud());
     });
 
     // TODO: Create REST endpoints for reading notes
