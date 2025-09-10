@@ -40,7 +40,7 @@ return function (RouteBuilder $routes): void {
         $routes->applyMiddleware('app-authentication');
         $routes->applyMiddleware('app-authorization');
 
-        $routes->redirect('/', ['_name' => 'notes:add']);
+        $routes->redirect('/', ['_name' => 'notes:index']);
         $routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'login']);
         $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'logout']);
         $routes->scope('/notes', ['_namePrefix' => 'notes:', 'controller' => 'Notes'], static function (RouteBuilder $routes) {
