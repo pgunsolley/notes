@@ -21,76 +21,42 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use App\Authentication\AppAuthenticationServiceProvider;
+use App\Authorization\AppAuthorizationServiceProvider;
+use Authentication\Middleware\AuthenticationMiddleware;
+use Authorization\Middleware\AuthorizationMiddleware;
+use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 
-/*
- * This file is loaded in the context of the `Application` class.
- * So you can use `$this` to reference the application class instance
- * if required.
- */
 return function (RouteBuilder $routes): void {
-    /*
-     * The default class to use for all routes
-     *
-     * The following route classes are supplied with CakePHP and are appropriate
-     * to set as the default:
-     *
-     * - Route
-     * - InflectedRoute
-     * - DashedRoute
-     *
-     * If no call is made to `Router::defaultRouteClass()`, the class used is
-     * `Route` (`Cake\Routing\Route\Route`)
-     *
-     * Note that `Route` does not do any inflections on URLs which will result in
-     * inconsistently cased URLs when used with `{plugin}`, `{controller}` and
-     * `{action}` markers.
-     */
     $routes->setRouteClass(DashedRoute::class);
 
-    $routes->scope('/', function (RouteBuilder $builder): void {
-        /*
-         * Here, we are connecting '/' (base path) to a controller called 'Pages',
-         * its action called 'display', and we pass a param to select the view file
-         * to use (in this case, templates/Pages/home.php)...
-         */
-        $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    $routes->scope('/', function (RouteBuilder $routes): void {
+        $routes->registerMiddleware('csrf', new CsrfProtectionMiddleware(['httponly' => true]));
+        $routes->registerMiddleware('app-authentication', new AuthenticationMiddleware(new AppAuthenticationServiceProvider()));
+        $routes->registerMiddleware('app-authorization', new AuthorizationMiddleware(new AppAuthorizationServiceProvider()));
+        $routes->applyMiddleware('csrf');
+        $routes->applyMiddleware('app-authentication');
+        $routes->applyMiddleware('app-authorization');
 
-        /*
-         * ...and connect the rest of 'Pages' controller's URLs.
-         */
-        $builder->connect('/pages/*', 'Pages::display');
-
-        /*
-         * Connect catchall routes for all controllers.
-         *
-         * The `fallbacks` method is a shortcut for
-         *
-         * ```
-         * $builder->connect('/{controller}', ['action' => 'index']);
-         * $builder->connect('/{controller}/{action}/*', []);
-         * ```
-         *
-         * It is NOT recommended to use fallback routes after your initial prototyping phase!
-         * See https://book.cakephp.org/5/en/development/routing.html#fallbacks-method for more information
-         */
-        $builder->fallbacks();
+        $routes->redirect('/', ['_name' => 'notes:add']);
+        $routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'login']);
+        $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'logout']);
+        $routes->scope('/notes', ['_namePrefix' => 'notes:', 'controller' => 'Notes'], static function (RouteBuilder $routes) {
+            $routes->connect('/', ['action' => 'index'], ['_name' => 'index']);
+            foreach (['add', 'edit', 'view', 'delete'] as $action) {
+                $routes->connect("/$action", compact('action'), ['_name' => $action]);
+            }
+        });
     });
 
+    // TODO: Create REST endpoints for reading notes
     /*
-     * If you need a different set of middleware or none at all,
-     * open new scope and define routes there.
-     *
-     * ```
-     * $routes->scope('/api', function (RouteBuilder $builder): void {
-     *     // No $builder->applyMiddleware() here.
-     *
-     *     // Parse specified extensions from URLs
-     *     // $builder->setExtensions(['json', 'xml']);
-     *
-     *     // Connect API actions here.
-     * });
-     * ```
-     */
+    $routes->prefix('Api', ['_namePrefix' => 'api:'], static function (RouteBuilder $routes) {
+        $routes->prefix('V1', ['_namePrefix' => 'v1:'], static function (RouteBuilder $routes) {
+            // TODO: Connect API middleware and routes
+        });
+    });
+    */
 };

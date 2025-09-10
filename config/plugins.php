@@ -15,4 +15,5 @@ return [
     'Authorization' => [],
     'Crud' => [],
     'CrudView' => [],
+    'BootstrapUI' => [],
 ];
