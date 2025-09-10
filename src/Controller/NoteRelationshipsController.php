@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Event\EventInterface;
+
 /**
  * NoteRelationships Controller
  *
@@ -14,9 +16,13 @@ class NoteRelationshipsController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-        // TODO: Load users in queries
-        // TODO: Apply query to search for owned only
-        // TODO: apply authorization checks
+        $userId = $this->Authentication->getIdentifier();
+        $this->Crud->on('beforePaginate', static function (EventInterface $event) use ($userId) {
+            // TODO: Make sure associations are right, then query based on user_id
+        });
+        $this->Crud->on('afterFind', function (EventInterface $event) use ($userId) {
+            // TODO: Apply authorization check
+        });
         $actionName = $this->request->getParam('action');
         if (in_array($actionName, ['index', 'add'])) {
             $this->Authorization->skipAuthorization();

@@ -17,13 +17,13 @@ class NotesController extends AppController
     {
         parent::initialize();
         $userId = $this->Authentication->getIdentifier();
-        $this->Crud->on('beforePaginate', function (EventInterface $event) use ($userId) {
+        $this->Crud->on('beforePaginate', static function (EventInterface $event) use ($userId) {
             $event->getSubject()->query->where(['user_id' => $userId]);
         });
         $this->Crud->on('afterFind', function (EventInterface $event) {
             $this->Authorization->authorize($event->getSubject()->entity);
         });
-        $this->Crud->on('beforeSave', function (EventInterface $event) use ($userId) {
+        $this->Crud->on('beforeSave', static function (EventInterface $event) use ($userId) {
             $entity = $event->getSubject()->entity;
             if ($entity->user_id === null) {
                 $entity->user_id = $userId;

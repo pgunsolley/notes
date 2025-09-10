@@ -41,13 +41,15 @@ class NoteRelationshipsTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp');
-        $this->belongsTo('ANotes', [
+        $this->belongsTo('Parents', [
             'className' => 'Notes',
             'foreignKey' => 'note_a',
+            'property_name' => 'parent',
         ]);
-        $this->belongsTo('BNotes', [
+        $this->belongsTo('Children', [
             'className' => 'Notes',
             'foreignKey' => 'note_b',
+            'propertyName' => 'child',
         ]);
     }
 

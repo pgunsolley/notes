@@ -11,6 +11,8 @@ use Cake\ORM\Entity;
  * @property string $id
  * @property string $note_a
  * @property string $note_b
+ * @property \App\Model\Entity\Note $parent
+ * @property \App\Model\Entity\Note $child
  * @property \Cake\I18n\DateTime $created
  * @property \Cake\I18n\DateTime $modified
  */
@@ -28,6 +30,8 @@ class NoteRelationship extends Entity
     protected array $_accessible = [
         'note_a' => true,
         'note_b' => true,
+        'parent' => true,
+        'child' => true,
         'created' => true,
         'modified' => true,
     ];

@@ -11,7 +11,7 @@ use Cake\ORM\Entity;
  * @property string $id
  * @property string $user_id
  * @property string $body
- * @property \App\Model\Entity\Note[] $related_notes
+ * @property \App\Model\Entity\Note[] $children
  * @property \Cake\I18n\DateTime $created
  * @property \Cake\I18n\DateTime $modified
  *
