@@ -42,9 +42,11 @@ class NoteRelationshipsTable extends Table
         $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp');
         $this->belongsTo('ANotes', [
+            'className' => 'Notes',
             'foreignKey' => 'note_a',
         ]);
         $this->belongsTo('BNotes', [
+            'className' => 'Notes',
             'foreignKey' => 'note_b',
         ]);
     }

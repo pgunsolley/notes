@@ -36,7 +36,7 @@ $crud = fn(array $ignored = []) =>
             if (in_array($action, $ignored)) {
                 continue;
             }
-            $routes->connect("/$action", compact('action'), ['_name' => $action]);
+            $routes->connect("/$action/*", compact('action'), ['_name' => $action]);
         }
     };
 

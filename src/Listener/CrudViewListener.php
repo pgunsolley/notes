@@ -18,6 +18,8 @@ class CrudViewListener extends BaseListener
         if ($this->_crud()->isActionMapped()) {
             $this->manageUtilityNavigation();
             $this->manageSidebarNavigation();
+            $this->manageFormFields();
+            $this->manageTitle();
         }
     }
 
@@ -28,10 +30,14 @@ class CrudViewListener extends BaseListener
         }
     }
 
+    protected function manageTitle()
+    {
+        $this->_action()->setConfig('scaffold.site_title', 'Notes');
+    }
+
     protected function manageSidebarNavigation()
     {
-        // Omit users
-        $this->_action()->setConfig('scaffold.tables', ['notes']);
+        $this->_action()->setConfig('scaffold.tables', ['notes', 'note_relationships']);
     }
 
     protected function manageUtilityNavigation()
@@ -44,6 +50,18 @@ class CrudViewListener extends BaseListener
             $items[] = new MenuItem('Logout', ['_name' => 'logout']);
         }
         $this->_action()->setConfig('scaffold.utility_navigation', $items);
+    }
+
+    protected function manageFormFields()
+    {
+        $actionName = $this->_request()->getParam('action');
+        $fields = [];
+        if (in_array($actionName, ['add', 'edit', 'view'])) {
+            $fields = ['user_id', 'created', 'modified'];
+        } else if ($actionName === 'index') {
+            $fields = ['id', 'user_id', 'created', 'modified'];
+        }
+        $this->_action()->setConfig('scaffold.fields_blacklist', $fields);
     }
 
     protected function manageCrudViewClass()
