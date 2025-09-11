@@ -12,7 +12,6 @@ return [
         'onlyCli' => true,
     ],
     'Authentication' => [],
-    'Authorization' => [],
     'Crud' => [],
     'CrudView' => [],
     'BootstrapUI' => [],

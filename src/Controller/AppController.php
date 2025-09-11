@@ -48,7 +48,6 @@ class AppController extends Controller
         $this->loadComponent('Flash');
         //$this->loadComponent('FormProtection');
         $this->loadComponent('Authentication.Authentication');
-        $this->loadComponent('Authorization.Authorization');
         $this->loadComponent('Crud.Crud', [
             'actions' => [
                 'Crud.Index',

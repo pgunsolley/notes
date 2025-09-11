@@ -22,9 +22,7 @@
  */
 
 use App\Authentication\AppAuthenticationServiceProvider;
-use App\Authorization\AppAuthorizationServiceProvider;
 use Authentication\Middleware\AuthenticationMiddleware;
-use Authorization\Middleware\AuthorizationMiddleware;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
@@ -46,10 +44,8 @@ return function (RouteBuilder $routes) use ($crud): void {
     $routes->scope('/', function (RouteBuilder $routes) use ($crud): void {
         $routes->registerMiddleware('csrf', new CsrfProtectionMiddleware(['httponly' => true]));
         $routes->registerMiddleware('app-authentication', new AuthenticationMiddleware(new AppAuthenticationServiceProvider()));
-        $routes->registerMiddleware('app-authorization', new AuthorizationMiddleware(new AppAuthorizationServiceProvider()));
         $routes->applyMiddleware('csrf');
         $routes->applyMiddleware('app-authentication');
-        $routes->applyMiddleware('app-authorization');
 
         $routes->redirect('/', ['_name' => 'notes:index']);
         $routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'login']);
