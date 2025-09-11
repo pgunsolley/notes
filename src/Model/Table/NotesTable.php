@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use Cake\Database\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -89,7 +90,13 @@ class NotesTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'), ['errorField' => 'user_id']);
+        $rules->add($rules->isUnique(['user_id', 'body'], 'Note already exists'));
 
         return $rules;
+    }
+
+    public function findByUserId(SelectQuery $query, string $userId): SelectQuery
+    {
+        return $query->where(['user_id' => $userId]);
     }
 }

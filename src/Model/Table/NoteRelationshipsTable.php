@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -44,11 +45,13 @@ class NoteRelationshipsTable extends Table
         $this->belongsTo('Parents', [
             'className' => 'Notes',
             'foreignKey' => 'note_a',
+            'bindingKey' => 'id',
             'property_name' => 'parent',
         ]);
         $this->belongsTo('Children', [
             'className' => 'Notes',
             'foreignKey' => 'note_b',
+            'bindingKey' => 'id',
             'propertyName' => 'child',
         ]);
     }
@@ -64,13 +67,20 @@ class NoteRelationshipsTable extends Table
         $validator
             ->uuid('note_a')
             ->requirePresence('note_a', 'create')
-            ->notEmptyString('note_a');
+            ->notEmptyString('note_a')
+            ->notSameAs('note_a', 'note_b', 'The parent note must not be the same as the child note');
 
         $validator
             ->uuid('note_b')
             ->requirePresence('note_b', 'create')
-            ->notEmptyString('note_b');
+            ->notEmptyString('note_b')
+            ->notSameAs('note_b', 'note_a', 'The child note must not be the same as the parent note');
 
         return $validator;
+    }
+
+    public function findByUserId(SelectQuery $query, string $userId): SelectQuery
+    {
+        return $query->matching('Parents', fn(SelectQuery $query) => $query->find('byUserId', $userId));
     }
 }

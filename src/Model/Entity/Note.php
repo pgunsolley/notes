@@ -30,6 +30,7 @@ class Note extends Entity
      */
     protected array $_accessible = [
         'body' => true,
+        'children' => true,
         'created' => true,
         'modified' => true,
     ];
