@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Listener;
 
 use Cake\Event\EventInterface;
+use Cake\Routing\Router;
 use Crud\Listener\BaseListener;
 use CrudView\Menu\MenuItem;
 
@@ -20,6 +21,7 @@ class CrudViewListener extends BaseListener
             $this->manageSidebarNavigation();
             $this->manageFormFields();
             $this->manageTitle();
+            $this->manageBulkActions();
         }
     }
 
@@ -28,6 +30,13 @@ class CrudViewListener extends BaseListener
         if ($this->_crud()->isActionMapped()) {
             $this->manageCrudViewClass();
         }
+    }
+
+    protected function manageBulkActions()
+    {
+        $this->_action()->setConfig('scaffold.bulk_actions', [
+            Router::url(['action' => 'deleteAll']) => __('Delete records'),
+        ]);
     }
 
     protected function manageTitle()

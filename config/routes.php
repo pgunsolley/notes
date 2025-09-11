@@ -30,7 +30,7 @@ use Cake\Routing\RouteBuilder;
 $crud = fn(array $ignored = []) =>
     static function (RouteBuilder $routes) use ($ignored) {
         $routes->connect('/', ['action' => 'index'], ['_name' => 'index']);
-        foreach (['add', 'edit', 'view', 'delete'] as $action) {
+        foreach (['add', 'edit', 'view', 'delete', 'deleteAll'] as $action) {
             if (in_array($action, $ignored)) {
                 continue;
             }
