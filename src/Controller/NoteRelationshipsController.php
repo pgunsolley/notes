@@ -18,21 +18,20 @@ class NoteRelationshipsController extends AppController
         parent::initialize();
         $userId = $this->Authentication->getIdentifier();
         $this->Crud->on('beforePaginate', static function (EventInterface $event) use ($userId) {
-            // TODO: Make sure associations are right, then query based on user_id
+            // TODO: Load user association; query WHERE userId == $userId only
+        });
+        $this->Crud->on('beforeFind', function (EventInterface $event) {
+            // TODO: Load user association
         });
         $this->Crud->on('afterFind', function (EventInterface $event) use ($userId) {
             // TODO: Apply authorization check
         });
-
-        // FIXME: Not updating heading
-        $this->Crud->action()->setConfig('scaffold.action_name', 'NoteTree');
-        
+        $this->Crud->action()->setConfig('scaffold.page_title', 'NoteTree');
         $actionName = $this->request->getParam('action');
         if ($actionName === 'index') {
-            // FIXME: Not altering column names
             $this->Crud->action()->setConfig('scaffold.fields', [
-                'note_a' => ['label' => 'Parent'],
-                'note_b' => ['label' => 'Child'],
+                'note_a' => ['title' => 'Parent'],
+                'note_b' => ['title' => 'Child'],
             ]);
         }
         if (in_array($actionName, ['index', 'add'])) {
