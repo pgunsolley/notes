@@ -29,8 +29,8 @@ class NoteRelationshipsController extends AppController
             $actionName = $this->request->getParam('action');
             if ($actionName === 'index') {
                 $action->setConfig('scaffold.fields', [
-                    'note_a' => ['title' => 'Parent'],
-                    'note_b' => ['title' => 'Child'],
+                    'parent.body' => ['title' => 'Parent'],
+                    'child.body' => ['title' => 'Child'],
                 ]);
             }
             if (in_array($actionName, ['add', 'view', 'edit'])) {
