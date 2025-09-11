@@ -10,7 +10,6 @@ use Cake\ORM\Query\SelectQuery;
  * NoteRelationships Controller
  *
  * @property \App\Model\Table\NoteRelationshipsTable $NoteRelationships
- * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  */
 class NoteRelationshipsController extends AppController
 {
@@ -33,9 +32,6 @@ class NoteRelationshipsController extends AppController
                     'note_a' => ['title' => 'Parent'],
                     'note_b' => ['title' => 'Child'],
                 ]);
-            }
-            if (in_array($actionName, ['index', 'add'])) {
-                $this->Authorization->skipAuthorization();
             }
             if (in_array($actionName, ['add', 'view', 'edit'])) {
                 $action->setConfig('relatedModels', false);
