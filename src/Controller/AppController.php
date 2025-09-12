@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
-use App\Listener\CrudViewListener;
+use App\Listener\Crud\AppListener;
 use Cake\Controller\Controller;
 use Crud\Controller\ControllerTrait;
 
@@ -63,7 +63,7 @@ class AppController extends Controller
                 'CrudView.View',
                 'Crud.Redirect',
                 'Crud.RelatedModels',
-                CrudViewListener::class,
+                AppListener::class,
             ],
         ]);
     }

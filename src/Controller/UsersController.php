@@ -13,7 +13,6 @@ class UsersController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-        $this->Crud->disable(['Index', 'View', 'Add', 'Edit', 'Delete']);
         $this->Authentication->allowUnauthenticated(['login']);
     }
 

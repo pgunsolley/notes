@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Listener;
+namespace App\Listener\Crud;
 
-use Cake\Event\EventInterface;
 use Cake\Routing\Router;
 use Crud\Listener\BaseListener;
 use CrudView\Menu\MenuItem;
@@ -12,9 +11,9 @@ use CrudView\Menu\MenuItem;
 /**
  * App-wide CrudView state management
  */
-class CrudViewListener extends BaseListener
+class AppListener extends BaseListener
 {
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter()
     {
         if ($this->_crud()->isActionMapped()) {
             $this->manageUtilityNavigation();
@@ -25,7 +24,7 @@ class CrudViewListener extends BaseListener
         }
     }
 
-    public function beforeRender(EventInterface $event)
+    public function beforeRender()
     {
         if ($this->_crud()->isActionMapped()) {
             $this->manageCrudViewClass();
