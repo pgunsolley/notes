@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Authentication;
 
+use App\Exception\MissingConfigurationException;
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
@@ -26,7 +27,12 @@ class ApiAuthenticationServiceProvider implements AuthenticationServiceProviderI
                 'fields' => $fields,
             ],
         ];
-        $config = Configure::read('Authentication.Api.authenticators.Authentication.Jwt');
+        $config = Configure::read('Authentication.Api');
+        foreach (['publicKey', 'algorithm'] as $key) {
+            if (!array_key_exists($key, $config)) {
+                throw new MissingConfigurationException($key);
+            }
+        }
         return new AuthenticationService([
             'authenticators' => [
                 'Authentication.Jwt' => [
