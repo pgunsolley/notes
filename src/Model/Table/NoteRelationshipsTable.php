@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use Cake\ORM\Query\SelectQuery;
+use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -77,6 +78,12 @@ class NoteRelationshipsTable extends Table
             ->notSameAs('note_b', 'note_a', 'The child note must not be the same as the parent note');
 
         return $validator;
+    }
+
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->isUnique(['note_a', 'note_b'], 'Relationship already exists'));
+        return $rules;
     }
 
     public function findByUserId(SelectQuery $query, string $userId): SelectQuery
