@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Listener\Crud;
 
 use Cake\Event\EventInterface;
-use Cake\ORM\Query\SelectQuery;
 use Crud\Listener\BaseListener;
 
 class NotesListener extends BaseListener
@@ -15,16 +14,20 @@ class NotesListener extends BaseListener
     public function startup()
     {
         $this->userId = $this->_controller()->Authentication->getIdentifier();
+        $action = $this->_action();
+        $action->setConfig('scaffold.page_title', 'Notes');
+        $actionName = $this->_request()->getParam('action');
+        // TODO: Wire associations
     }
 
     public function beforePaginate(EventInterface $event)
     {
-        $this->modifyQuery($event->getSubject()->query);
+        $event->getSubject()->query->find('byUserId', userId: $this->userId);
     }
 
     public function beforeFind(EventInterface $event)
     {
-        $this->modifyQuery($event->getSubject()->query);
+        $event->getSubject()->query->find('byUserId', userId: $this->userId);
     }
 
     public function beforeSave(EventInterface $event)
@@ -33,10 +36,5 @@ class NotesListener extends BaseListener
         if ($entity->user_id === null) {
             $entity->user_id = $this->userId;
         }
-    }
-
-    protected function modifyQuery(SelectQuery $query): SelectQuery
-    {
-        return $query->find('byUserId', userId: $this->userId);
     }
 }

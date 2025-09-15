@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Listener\Crud\NotesListener;
-use Cake\Event\EventInterface;
-use Cake\Http\Exception\UnauthorizedException;
 
 /**
  * Notes Controller
