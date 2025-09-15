@@ -21,6 +21,7 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use App\Authentication\ApiAuthenticationServiceProvider;
 use App\Authentication\AppAuthenticationServiceProvider;
 use Authentication\Middleware\AuthenticationMiddleware;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
@@ -55,9 +56,11 @@ return function (RouteBuilder $routes) use ($crud): void {
     });
 
     $routes->prefix('Api', ['_namePrefix' => 'api:'], static function (RouteBuilder $routes) {
-        // TODO: Register AuthenticationMiddleware with ApiAuthenticationServiceProvider
+        $routes->registerMiddleware('api-authentication', new AuthenticationMiddleware(new ApiAuthenticationServiceProvider()));
+        $routes->applyMiddleware('api-authentication');
         $routes->prefix('V1', ['_namePrefix' => 'v1:'], static function (RouteBuilder $routes) {
-            
+            // TODO: Register routes for notes
+            // Allow query parameters for configuration
         });
     });
 };

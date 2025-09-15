@@ -62,6 +62,7 @@ class Installer
         $rootDir = dirname(__DIR__, 2);
 
         static::createAppLocalConfig($rootDir, $io);
+        static::createAuthenticationLocalConfig($rootDir, $io);
         static::createWritableDirectories($rootDir, $io);
 
         static::setFolderPermissions($rootDir, $io);
@@ -86,6 +87,23 @@ class Installer
         if (!file_exists($appLocalConfig)) {
             copy($appLocalConfigTemplate, $appLocalConfig);
             $io->write('Created `config/app_local.php` file');
+        }
+    }
+    
+    /**
+     * Create config/authentication_local.php file if it does not exist.
+     *
+     * @param string $dir The application's root directory.
+     * @param \Composer\IO\IOInterface $io IO interface to write to console.
+     * @return void
+     */
+    public static function createAuthenticationLocalConfig(string $dir, IOInterface $io): void
+    {
+        $appLocalConfig = $dir . '/config/authentication_local.php';
+        $appLocalConfigTemplate = $dir . '/config/authentication_local.example.php';
+        if (!file_exists($appLocalConfig)) {
+            copy($appLocalConfigTemplate, $appLocalConfig);
+            $io->write('Created `config/authentication_local.php` file');
         }
     }
 

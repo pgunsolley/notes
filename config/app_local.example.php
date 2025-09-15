@@ -94,12 +94,4 @@ return [
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
         ],
     ],
-
-    'Authentication' => [
-        'Api' => [
-            'authenticators' => [
-                
-            ],
-        ],
-    ],
 ];

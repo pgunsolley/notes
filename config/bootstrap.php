@@ -95,6 +95,10 @@ if (file_exists(CONFIG . 'app_local.php')) {
     Configure::load('app_local', 'default');
 }
 
+if (file_exists(CONFIG . 'authentication_local.php')) {
+    Configure::load('authentication_local', 'default');
+}
+
 /*
  * When debug = true the metadata cache should only last for a short time.
  */
