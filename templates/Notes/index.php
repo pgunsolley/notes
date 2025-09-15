@@ -54,7 +54,7 @@
 <script>
     $(document).ready(function() {
         const focusOnAddBtn = function() {
-            $('a[href="/notes/add"').first().focus();
+            $('a[href="/notes/add"]').first().focus();
         };
 
         focusOnAddBtn();
