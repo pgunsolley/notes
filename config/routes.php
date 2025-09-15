@@ -54,12 +54,10 @@ return function (RouteBuilder $routes) use ($crud): void {
         $routes->scope('/note-tree', ['_namePrefix' => 'note-tree:', 'controller' => 'NoteRelationships'], $crud());
     });
 
-    // TODO: Create REST endpoints for reading notes
-    /*
     $routes->prefix('Api', ['_namePrefix' => 'api:'], static function (RouteBuilder $routes) {
+        // TODO: Register AuthenticationMiddleware with ApiAuthenticationServiceProvider
         $routes->prefix('V1', ['_namePrefix' => 'v1:'], static function (RouteBuilder $routes) {
-            // TODO: Connect API middleware and routes
+            
         });
     });
-    */
 };
