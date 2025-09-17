@@ -21,12 +21,6 @@ class ApiAuthenticationServiceProvider implements AuthenticationServiceProviderI
             AbstractIdentifier::CREDENTIAL_USERNAME => 'email',
             AbstractIdentifier::CREDENTIAL_PASSWORD => 'password',
         ];
-        $loginUrl = Router::url(['_name' => 'api:v1:authenticate']);
-        $passwordIdentifier = [
-            'Authentication.Password' => [
-                'fields' => $fields,
-            ],
-        ];
         $config = Configure::read('Authentication.Api');
         foreach (['publicKey', 'algorithm'] as $key) {
             if (!array_key_exists($key, $config)) {
@@ -41,9 +35,13 @@ class ApiAuthenticationServiceProvider implements AuthenticationServiceProviderI
                     'algorithm' => $config['algorithm'],
                 ],
                 'Authentication.Form' => [
-                    'identifier' => $passwordIdentifier,
+                    'identifier' => [
+                        'Authentication.Password' => [
+                            'fields' => $fields,
+                        ],
+                    ],
                     'fields' => $fields,
-                    'loginUrl' => $loginUrl,
+                    'loginUrl' => Router::url(['_name' => 'api:v1:authenticate']),
                 ],
             ],
         ]);

@@ -59,7 +59,7 @@ return function (RouteBuilder $routes) use ($crud): void {
         $routes->registerMiddleware('api-authentication', new AuthenticationMiddleware(new ApiAuthenticationServiceProvider()));
         $routes->applyMiddleware('api-authentication');
         $routes->prefix('V1', ['_namePrefix' => 'v1:'], static function (RouteBuilder $routes) {
-            $routes->connect('/authenticate', ['controller' => 'Users', 'action' => 'authenticate'], ['_name' => 'authenticate']);
+            $routes->post('/authenticate', ['controller' => 'Users', 'action' => 'authenticate'], 'authenticate');
         });
     });
 };

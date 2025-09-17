@@ -24,9 +24,6 @@ class ApiController extends Controller
 
         $this->loadComponent('Authentication.Authentication');
         $this->loadComponent('Crud.Crud', [
-            'actions' => [
-                'Crud.Index',
-            ],
             'listeners' => [
                 'Crud.Api',
             ],

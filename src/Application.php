@@ -66,8 +66,8 @@ class Application extends BaseApplication
             ->add(new AssetMiddleware([
                 'cacheTime' => Configure::read('Asset.cacheTime'),
             ]))
-            ->add(new RoutingMiddleware($this))
-            ->add(new BodyParserMiddleware());
+            ->add(new BodyParserMiddleware())
+            ->add(new RoutingMiddleware($this));
 
         return $middlewareQueue;
     }
