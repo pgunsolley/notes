@@ -61,6 +61,7 @@ return function (RouteBuilder $routes) use ($crud): void {
         $routes->prefix('V1', ['_namePrefix' => 'v1:'], static function (RouteBuilder $routes) {
             $routes->post('/authenticate', ['controller' => 'Users', 'action' => 'authenticate'], 'authenticate');
             $routes->resources('Notes');
+            $routes->resources('NoteRelationships');
         });
     });
 };
