@@ -13,16 +13,6 @@ class NotePolicy
         return $identity->getIdentifier() === $note->user_id;
     }
 
-    public function canAdd(): bool
-    {
-        return true;
-    }
-
-    public function canView(Identity $identity, Note $note): bool
-    {
-        return $this->identifierIsUserId($identity, $note);
-    }
-
     public function canEdit(Identity $identity, Note $note): bool
     {
         return $this->identifierIsUserId($identity, $note);

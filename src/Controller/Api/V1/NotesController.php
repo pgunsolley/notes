@@ -20,6 +20,6 @@ class NotesController extends ApiController
         parent::initialize();
         $this->Crud->addListener('FindByIdentityListener', FindByIdentityListener::class);
         $this->Crud->addListener('SetIdentifierListener', SetIdentifierListener::class);
-        $this->Crud->addListener('EntityAuthorizationListener', EntityAuthorizationListener::class);
+        $this->Crud->addListener('EntityAuthorizationListener', EntityAuthorizationListener::class, ['skip' => ['add', 'view']]);
     }
 }
