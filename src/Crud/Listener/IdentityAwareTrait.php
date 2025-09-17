@@ -26,6 +26,7 @@ trait IdentityAwareTrait
 
     protected function _identifier()
     {
+        // Checking the identifierField is no longer required if using the App\Authentication\Identity class
         $identifierField = $this->getConfig('identifierField', null);
         if ($identifierField === null) {
             return $this->_identity()->getIdentifier();

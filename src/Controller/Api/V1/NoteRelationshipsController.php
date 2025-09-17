@@ -16,6 +16,6 @@ class NoteRelationshipsController extends ApiController
     public function initialize(): void
     {
         parent::initialize();
-        $this->Crud->addListener('FindByIdentityListener', FindByIdentityListener::class, ['identifierField' => 'sub']);
+        $this->Crud->addListener('FindByIdentityListener', FindByIdentityListener::class);
     }
 }

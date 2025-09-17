@@ -26,6 +26,7 @@ class AppAuthenticationServiceProvider implements AuthenticationServiceProviderI
             ],
         ];
         return new AuthenticationService([
+            'identityClass' => Identity::class,
             'unauthenticatedRedirect' => Router::url($loginUrl),
             'queryParam' => 'redirect',
             'authenticators' => [

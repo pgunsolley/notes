@@ -18,6 +18,7 @@ class UsersController extends ApiController
     {
         parent::initialize();
         $this->Authentication->allowUnauthenticated(['authenticate']);
+        $this->Authorization->skipAuthorization();
     }
 
     public function authenticate()

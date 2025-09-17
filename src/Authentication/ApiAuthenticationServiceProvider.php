@@ -21,6 +21,7 @@ class ApiAuthenticationServiceProvider implements AuthenticationServiceProviderI
             AbstractIdentifier::CREDENTIAL_PASSWORD => 'password',
         ];
         return new AuthenticationService([
+            'identityClass' => Identity::class,
             'authenticators' => [
                 'Authentication.Jwt' => [
                     'identifier' => 'Authentication.JwtSubject',
