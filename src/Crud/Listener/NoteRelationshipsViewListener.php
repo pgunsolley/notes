@@ -7,7 +7,7 @@ namespace App\Crud\Listener;
 use App\Crud\Listener\IdentityAwareTrait;
 use Crud\Listener\BaseListener;
 
-class NoteRelationshipsListener extends BaseListener
+class NoteRelationshipsViewListener extends BaseListener
 {
     use IdentityAwareTrait;
 
