@@ -5,6 +5,7 @@ use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;
 use Cake\Log\Engine\FileLog;
 use Cake\Mailer\Transport\MailTransport;
+use Crud\Error\ExceptionRenderer as CrudExceptionRenderer;
 use function Cake\Core\env;
 
 return [
@@ -164,6 +165,7 @@ return [
      *   your application that still emit deprecations.
      */
     'Error' => [
+        'exceptionRenderer' => CrudExceptionRenderer::class,
         'errorLevel' => E_ALL,
         'skipLog' => [],
         'log' => true,

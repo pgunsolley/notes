@@ -27,6 +27,8 @@ class ApiController extends Controller
             'actions' => [
                 'Crud.Index',
                 'Crud.View',
+                'Crud.Add',
+                'Crud.Edit',
             ],
             'listeners' => [
                 'Crud.Api',

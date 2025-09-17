@@ -5,6 +5,7 @@ namespace App\Controller\Api\V1;
 
 use App\Controller\Api\ApiController;
 use App\Crud\Listener\FindByIdentityListener;
+use App\Crud\Listener\SetIdentifierListener;
 
 /**
  * Notes Controller
@@ -17,5 +18,6 @@ class NotesController extends ApiController
     {
         parent::initialize();
         $this->Crud->addListener('FindByIdentityListener', FindByIdentityListener::class, ['identifierField' => 'sub']);
+        $this->Crud->addListener('SetIdentifierListener', SetIdentifierListener::class, ['identifierField' => 'sub']);
     }
 }
