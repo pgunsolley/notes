@@ -1,6 +1,6 @@
 <?php
 
-use Cake\Cache\Engine\FileEngine;
+use Cake\Cache\Engine\MemcachedEngine;
 use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;
 use Cake\Log\Engine\FileLog;
@@ -97,8 +97,7 @@ return [
      */
     'Cache' => [
         'default' => [
-            'className' => FileEngine::class,
-            'path' => CACHE,
+            'className' => MemcachedEngine::class,
             'url' => env('CACHE_DEFAULT_URL', null),
         ],
 
@@ -109,11 +108,8 @@ return [
          * If you set 'className' => 'Null' core cache will be disabled.
          */
         '_cake_translations_' => [
-            'className' => FileEngine::class,
+            'className' => MemcachedEngine::class,
             'prefix' => 'myapp_cake_translations_',
-            'path' => CACHE . 'persistent' . DS,
-            'serialize' => true,
-            'duration' => '+1 years',
             'url' => env('CACHE_CAKECORE_URL', null),
         ],
 
@@ -124,11 +120,8 @@ return [
          * Duration will be set to '+2 minutes' in bootstrap.php when debug = true
          */
         '_cake_model_' => [
-            'className' => FileEngine::class,
+            'className' => MemcachedEngine::class,
             'prefix' => 'myapp_cake_model_',
-            'path' => CACHE . 'models' . DS,
-            'serialize' => true,
-            'duration' => '+1 years',
             'url' => env('CACHE_CAKEMODEL_URL', null),
         ],
     ],
@@ -411,7 +404,7 @@ return [
      * To use database sessions, load the SQL file located at config/schema/sessions.sql
      */
     'Session' => [
-        'defaults' => 'php',
+        'defaults' => 'cache',
     ],
 
     /**

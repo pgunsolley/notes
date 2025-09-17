@@ -11,7 +11,10 @@ database:
     version: "10.11"
 use_dns_when_possible: true
 composer_version: "2"
-web_environment: []
+web_environment:
+  - CACHE_DEFAULT_URL=memcached://memcached:11211
+  - CACHE_CAKECORE_URL=memcached://memcached:11211
+  - CACHE_CAKEMODEL_URL=memcached://memcached:11211
 corepack_enable: false
 disable_upload_dirs_warning: true
 
