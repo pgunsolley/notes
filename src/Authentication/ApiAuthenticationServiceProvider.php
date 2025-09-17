@@ -21,18 +21,12 @@ class ApiAuthenticationServiceProvider implements AuthenticationServiceProviderI
             AbstractIdentifier::CREDENTIAL_USERNAME => 'email',
             AbstractIdentifier::CREDENTIAL_PASSWORD => 'password',
         ];
-        $config = Configure::read('Authentication.Api');
-        foreach (['publicKey', 'algorithm'] as $key) {
-            if (!array_key_exists($key, $config)) {
-                throw new MissingConfigurationException($key);
-            }
-        }
         return new AuthenticationService([
             'authenticators' => [
                 'Authentication.Jwt' => [
                     'identifier' => 'Authentication.JwtSubject',
-                    'secretKey' => $config['publicKey'],
-                    'algorithm' => $config['algorithm'],
+                    'secretKey' => Configure::readOrFail('Authentication.Api.publicKey'),
+                    'algorithm' => Configure::readOrFail('Authentication.Api.algorithm'),
                 ],
                 'Authentication.Form' => [
                     'identifier' => [

@@ -25,9 +25,9 @@ class UsersController extends ApiController
         $result = $this->Authentication->getResult();
         dd($result);
         if ($result->isValid()) {
-            $algorithm = Configure::read('');
-            $privateKey = Configure::read('');
-            $expiration = Configure::read('');
+            $algorithm = Configure::readOrFail('Authentication.Api.algorithm');
+            $privateKey = Configure::readOrFail('Authentication.Api.privateKey');
+            $expiration = Configure::readOrFail('Authentication.Api.expiration');
             $user = $result->getData();
             $payload = [
                 'iss' => $this->request->domain(),
