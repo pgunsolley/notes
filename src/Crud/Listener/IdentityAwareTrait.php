@@ -26,6 +26,11 @@ trait IdentityAwareTrait
 
     protected function _identifier()
     {
-        return $this->_identity()->getIdentifier();
+        $identifierField = $this->getConfig('identifierField', null);
+        if ($identifierField === null) {
+            return $this->_identity()->getIdentifier();
+        }
+
+        return $this->_identity()->{$identifierField};
     }
 }
