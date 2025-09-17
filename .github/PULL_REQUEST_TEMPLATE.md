@@ -1,14 +1,34 @@
-<!---
+# Pull Request
 
-**PLEASE NOTE:**
+## Description
 
-This is only a issue tracker for issues related to the CakePHP Application Skeleton.
-For CakePHP Framework issues please use this [issue tracker](https://github.com/cakephp/cakephp/issues).
+Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context.
 
-Describe the big picture of your changes here to communicate to the maintainers why we should accept this pull request. If it fixes a bug or resolves a feature request, be sure to link to that issue.
+Fixes # (issue)
 
-The best way to propose a feature is to open an issue first and discuss your ideas there before implementing them.
+## Type of change
 
-Always follow the [contribution guidelines](https://github.com/cakephp/cakephp/blob/master/.github/CONTRIBUTING.md) guidelines when submitting a pull request. In particular, make sure existing tests still pass, and add tests for all new behavior. When fixing a bug, you may want to add a test to verify the fix.
+Please delete options that are not relevant.
 
--->
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] New feature (non-breaking change which adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] Documentation update
+
+## How Has This Been Tested?
+
+Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. 
+
+- [ ] Test A
+- [ ] Test B
+
+## Checklist:
+
+- [ ] My code follows the style guidelines of this project
+- [ ] I have performed a self-review of my own code
+- [ ] I have commented my code, particularly in hard-to-understand areas
+- [ ] I have made corresponding changes to the documentation
+- [ ] My changes generate no new warnings
+- [ ] I have added tests that prove my fix is effective or that my feature works
+- [ ] New and existing unit tests pass locally with my changes
+- [ ] Any dependent changes have been merged and published in downstream modules
