@@ -23,7 +23,6 @@ class UsersController extends ApiController
     public function authenticate()
     {
         $result = $this->Authentication->getResult();
-        dd($result);
         if ($result->isValid()) {
             $algorithm = Configure::readOrFail('Authentication.Api.algorithm');
             $privateKey = Configure::readOrFail('Authentication.Api.privateKey');
