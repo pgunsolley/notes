@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Listener\Crud;
+namespace App\Crud\Listener;
 
 use Cake\Routing\Router;
 use Crud\Listener\BaseListener;

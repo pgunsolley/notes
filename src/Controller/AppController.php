@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
-use App\Listener\Crud\AppListener;
+use App\Crud\Listener\AppListener;
 use Cake\Controller\Controller;
 use Crud\Controller\ControllerTrait;
 

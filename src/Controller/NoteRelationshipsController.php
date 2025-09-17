@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Listener\Crud\NoteRelationshipsListener;
+use App\Crud\Listener\FindByIdentityListener;
+use App\Crud\Listener\NoteRelationshipsListener;
 
 /**
  * NoteRelationships Controller
@@ -15,6 +16,7 @@ class NoteRelationshipsController extends AppController
     public function initialize(): void
     {
         parent::initialize();
+        $this->Crud->addListener('FindByIdentityListener', FindByIdentityListener::class);
         $this->Crud->addListener('NoteRelationshipsListener', NoteRelationshipsListener::class);
     }
 }

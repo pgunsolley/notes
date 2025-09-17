@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Authentication;
 
-use App\Exception\MissingConfigurationException;
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;

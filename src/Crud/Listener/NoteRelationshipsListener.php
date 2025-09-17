@@ -2,19 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Listener\Crud;
+namespace App\Crud\Listener;
 
-use Cake\Event\EventInterface;
-use Cake\ORM\Query\SelectQuery;
+use App\Crud\Listener\IdentityAwareTrait;
 use Crud\Listener\BaseListener;
 
 class NoteRelationshipsListener extends BaseListener
 {
-    protected readonly ?string $userId;
+    use IdentityAwareTrait;
 
     public function startup(): void
     {
-        $this->userId = $this->_controller()->Authentication->getIdentifier();
         $action = $this->_action();
         $action->setConfig('scaffold.page_title', 'NoteTree');
         $actionName = $this->_request()->getParam('action');
@@ -30,7 +28,7 @@ class NoteRelationshipsListener extends BaseListener
                 ->_controller()
                 ->fetchTable('Notes')
                 ->find('list')
-                ->find('byUserId', userId: $this->userId)
+                ->find('byUserId', userId: $this->_identifier())
                 ->orderBy('body');
             $action->setConfig('scaffold.fields', [
                 'note_a' => [
@@ -45,20 +43,5 @@ class NoteRelationshipsListener extends BaseListener
                 ],
             ]);
         }
-    }
-
-    public function beforePaginate(EventInterface $event): void
-    {
-        $this->modifyQuery($event->getSubject()->query);
-    }
-
-    public function beforeFind(EventInterface $event): void
-    {
-        $this->modifyQuery($event->getSubject()->query);
-    }
-
-    protected function modifyQuery(SelectQuery $query): SelectQuery
-    {
-        return $query->find('byUserId', userId: $this->userId);
     }
 }
