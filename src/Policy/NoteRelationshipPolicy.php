@@ -8,5 +8,18 @@ use Authorization\Identity;
 
 class NoteRelationshipPolicy
 {
-    // TODO: Add checks for edit|delete
+    public function canIndex(Identity $identity, NoteRelationship $noteRelationship): bool
+    {
+        return true;
+    }
+
+    public function canEdit(Identity $identity, NoteRelationship $noteRelationship): bool
+    {
+
+    }
+
+    public function canDelete(Identity $identity, NoteRelationship $noteRelationship): bool
+    {
+
+    }
 }

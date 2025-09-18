@@ -17,8 +17,10 @@ class EntityAuthorizationListener extends BaseListener
         return array_merge(
             array_fill_keys([
                 'Crud.beforeFilter',
-                'Crud.beforeSave',
+                'Crud.afterPaginate',
                 'Crud.afterFind',
+                'Crud.beforeSave',
+                'Crud.beforeDelete',
             ], 'handleAuthorization'),
         );
     }
@@ -26,12 +28,20 @@ class EntityAuthorizationListener extends BaseListener
     public function handleAuthorization(EventInterface $event): void
     {
         $subject = $event->getSubject();
-        $target = $subject->entity ?? null;
+        if (property_exists($subject, 'entity')) {
+            $entities = [$subject->entity];
+        } else if (property_exists($subject, 'entities')) {
+            $entities = $subject->entities;
+        } else {
+            $entities = null;
+        }
 
-        if ($target === null || $this->isActionSkipped()) {
+        if ($entities === null || $this->isActionSkipped()) {
             $this->_controller()->Authorization->skipAuthorization();
         } else {
-            $this->_controller()->Authorization->authorize($target);
+            foreach ($entities as $entity) {
+                $this->_controller()->Authorization->authorize($entity);
+            }
         }
     }
 
