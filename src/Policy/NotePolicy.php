@@ -8,33 +8,33 @@ use Authorization\Identity;
 
 class NotePolicy
 {
-    protected function identifierIsUserId(Identity $identity, Note $note): bool
+    public function isIdentifierUserId(Identity $identity, Note $note): bool
     {
         return $identity->getIdentifier() === $note->user_id;
     }
 
     public function canIndex(Identity $identity, Note $note): bool
     {
-        return $this->identifierIsUserId($identity, $note);
+        return $this->isIdentifierUserId($identity, $note);
     }
 
     public function canView(Identity $identity, Note $note): bool
     {
-        return $this->identifierIsUserId($identity, $note);
+        return $this->isIdentifierUserId($identity, $note);
     }
 
     public function canAdd(Identity $identity, Note $note): bool
     {
-        return $this->identifierIsUserId($identity, $note);
+        return $this->isIdentifierUserId($identity, $note);
     }
 
     public function canEdit(Identity $identity, Note $note): bool
     {
-        return $this->identifierIsUserId($identity, $note);
+        return $this->isIdentifierUserId($identity, $note);
     }
 
     public function canDelete(Identity $identity, Note $note): bool
     {
-        return $this->identifierIsUserId($identity, $note);
+        return $this->isIdentifierUserId($identity, $note);
     }
 }
