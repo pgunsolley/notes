@@ -30,6 +30,7 @@ class ApiController extends Controller
                 'Crud.View',
                 'Crud.Add',
                 'Crud.Edit',
+                'Crud.Delete',
             ],
             'listeners' => [
                 'Crud.Api',

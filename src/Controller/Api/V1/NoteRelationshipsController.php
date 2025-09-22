@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller\Api\V1;
 
 use App\Controller\Api\ApiController;
+use App\Crud\Listener\EntityAuthorizationListener;
 use App\Crud\Listener\FindByIdentityListener;
 
 /**
@@ -17,5 +18,6 @@ class NoteRelationshipsController extends ApiController
     {
         parent::initialize();
         $this->Crud->addListener('FindByIdentityListener', FindByIdentityListener::class);
+        $this->Crud->addListener('EntityAuthorizationListener', EntityAuthorizationListener::class);
     }
 }
