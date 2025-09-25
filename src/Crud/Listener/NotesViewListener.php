@@ -32,4 +32,18 @@ class NotesViewListener extends BaseListener
             $query->find('byUserId', userId: $this->_identifier());
         }
     }
+
+    public function beforeRender(EventInterface $event)
+    {
+        $viewVars = $this->_controller->viewBuilder()->getVars();
+        if (array_key_exists('associations', $viewVars)) {
+            $associations = $viewVars['associations'];
+            if (array_key_exists('manyToMany', $associations)) {
+                if (array_key_exists('Children', $associations['manyToMany'])) {
+                    $associations['manyToMany']['Children']['controller'] = 'Notes';
+                    $this->_controller()->set(compact('associations'));
+                }
+            }
+        }
+    }
 }
