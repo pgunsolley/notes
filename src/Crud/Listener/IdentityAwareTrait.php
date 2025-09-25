@@ -4,29 +4,16 @@ declare(strict_types=1);
 namespace App\Crud\Listener;
 
 use Authentication\IdentityInterface;
-use Exception;
 
 trait IdentityAwareTrait
 {
-    protected ?IdentityInterface $identity = null;
-
-    public function beforeFilter(): void
-    {
-        $this->identity = $this->_controller()->Authentication->getIdentity();
-    }
-
     protected function _identity(): IdentityInterface
     {
-        if ($this->identity === null) {
-            throw new Exception('Identity is not set');
-        }
-
-        return $this->identity;
+        return $this->_controller()->Authentication->getIdentity();
     }
 
     protected function _identifier()
     {
-        // Checking the identifierField is no longer required if using the App\Authentication\Identity class
         $identifierField = $this->getConfig('identifierField', null);
         if ($identifierField === null) {
             return $this->_identity()->getIdentifier();
