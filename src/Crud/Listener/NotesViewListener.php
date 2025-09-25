@@ -25,8 +25,11 @@ class NotesViewListener extends BaseListener
     public function relatedModel(EventInterface $event)
     {
         $subject = $event->getSubject();
+        $query = $subject->query;
         $association = $subject->association;
-        
-        // TODO: Refactor IdentifierAwareTrait
+
+        if ($association->getName() === 'Children') {
+            $query->find('byUserId', userId: $this->_identifier());
+        }
     }
 }
