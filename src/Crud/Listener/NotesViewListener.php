@@ -33,6 +33,14 @@ class NotesViewListener extends BaseListener
         }
     }
 
+    public function beforeFilter(EventInterface $event)
+    {
+        $action = $this->_request()->getParam('action');
+        if ($action === 'view') {
+            $this->_action()->setConfig('scaffold.fields_blacklist', ['children._ids']);
+        }
+    }
+    
     public function beforeRender(EventInterface $event)
     {
         $viewVars = $this->_controller->viewBuilder()->getVars();
