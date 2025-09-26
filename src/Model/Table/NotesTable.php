@@ -49,6 +49,14 @@ class NotesTable extends Table
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
         ]);
+        $this->belongsToMany('Parents', [
+            'className' => 'Notes',
+            'joinTable' => 'note_relationships',
+            'foreignKey' => 'note_b',
+            'targetForeignKey' => 'note_a',
+            'dependent' => true,
+            'propertyName' => 'parents',
+        ]);
         $this->belongsToMany('Children', [
             'className' => 'Notes',
             'joinTable' => 'note_relationships',

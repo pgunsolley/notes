@@ -11,6 +11,7 @@ use Cake\ORM\Entity;
  * @property string $id
  * @property string $user_id
  * @property string $body
+ * @property \App\Model\Entity\Note[] $parents
  * @property \App\Model\Entity\Note[] $children
  * @property \Cake\I18n\DateTime $created
  * @property \Cake\I18n\DateTime $modified
@@ -30,6 +31,7 @@ class Note extends Entity
      */
     protected array $_accessible = [
         'body' => true,
+        'parents' => true,
         'children' => true,
         'created' => true,
         'modified' => true,

@@ -28,7 +28,7 @@ class NotesViewListener extends BaseListener
         $query = $subject->query;
         $association = $subject->association;
 
-        if ($association->getName() === 'Children') {
+        if (in_array($association->getName(), ['Parents', 'Children'])) {
             $query->find('byUserId', userId: $this->_identifier());
         }
     }
@@ -37,7 +37,7 @@ class NotesViewListener extends BaseListener
     {
         $action = $this->_request()->getParam('action');
         if ($action === 'view') {
-            $this->_action()->setConfig('scaffold.fields_blacklist', ['children._ids']);
+            $this->_action()->setConfig('scaffold.fields_blacklist', ['parents._ids', 'children._ids']);
         }
     }
     
@@ -47,10 +47,10 @@ class NotesViewListener extends BaseListener
         if (array_key_exists('associations', $viewVars)) {
             $associations = $viewVars['associations'];
             if (array_key_exists('manyToMany', $associations)) {
-                if (array_key_exists('Children', $associations['manyToMany'])) {
-                    $associations['manyToMany']['Children']['controller'] = 'Notes';
-                    $this->_controller()->set(compact('associations'));
+                foreach (array_intersect(['Parents', 'Children'], array_keys($associations['manyToMany'])) as $assocName) {
+                    $associations['manyToMany'][$assocName]['controller'] = 'Notes';
                 }
+                $this->_controller()->set(compact('associations'));
             }
         }
     }
