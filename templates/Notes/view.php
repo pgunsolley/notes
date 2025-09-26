@@ -26,6 +26,5 @@ $assocMap = isset($associations['manyToOne']) ?
         }
         ?>
     </table>
-    <!-- TODO: Replace this with a custom table that loads the child notes (belongsToMany) -->
     <?= $this->element('view/related'); ?>
 </div>

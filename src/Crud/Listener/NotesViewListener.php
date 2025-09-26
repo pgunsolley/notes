@@ -6,6 +6,7 @@ namespace App\Crud\Listener;
 
 use App\Crud\Listener\IdentityAwareTrait;
 use Cake\Event\EventInterface;
+use Cake\ORM\Query\SelectQuery;
 use Crud\Listener\BaseListener;
 
 class NotesViewListener extends BaseListener
@@ -20,6 +21,14 @@ class NotesViewListener extends BaseListener
     public function startup()
     {
         $this->_action()->setConfig('scaffold.page_title', 'Notes');
+        /** @var \Crud\Listener\RelatedModelsListener $relatedModelsListener */
+        $relatedModelsListener = $this->_crud()->listener('relatedModels');
+        $relatedModelsListener->relatedModels(['Parents', 'Children']);
+
+        $action = $this->_request()->getParam('action');
+        if ($action === 'view') {
+            $this->_action()->setConfig('scaffold.fields_blacklist', ['parents._ids', 'children._ids']);
+        }
     }
 
     public function relatedModel(EventInterface $event)
@@ -33,11 +42,15 @@ class NotesViewListener extends BaseListener
         }
     }
 
-    public function beforeFilter(EventInterface $event)
+    public function beforeFind(EventInterface $event)
     {
-        $action = $this->_request()->getParam('action');
-        if ($action === 'view') {
-            $this->_action()->setConfig('scaffold.fields_blacklist', ['parents._ids', 'children._ids']);
+        $subject = $event->getSubject();
+        /** @var \Cake\ORM\Query\SelectQuery $query */
+        $query = $subject->query;
+        foreach (['Children', 'Parents'] as $assocName) {
+            $query->contain($assocName, static function (SelectQuery $query) {
+                return $query->select(['id', 'body']);
+            });
         }
     }
     
