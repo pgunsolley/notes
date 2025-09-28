@@ -29,15 +29,15 @@ use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 
 $crud = fn(array $ignored = []) =>
-    static function (RouteBuilder $routes) use ($ignored) {
-        $routes->connect('/', ['action' => 'index'], ['_name' => 'index']);
-        foreach (['add', 'edit', 'view', 'delete', 'deleteAll'] as $action) {
-            if (in_array($action, $ignored)) {
-                continue;
-            }
-            $routes->connect("/$action/*", compact('action'), ['_name' => $action]);
-        }
-    };
+    fn(RouteBuilder $routes) =>
+        array_map(fn($action) =>
+            $routes->connect(
+                $action === 'index' ? '/' : "/$action/*", 
+                compact('action'), 
+                ['_name' => $action],
+            ),
+            array_diff(['index', 'add', 'edit', 'view', 'delete', 'deleteAll'], $ignored)
+        );
 
 return function (RouteBuilder $routes) use ($crud): void {
     $routes->setRouteClass(DashedRoute::class);
@@ -52,7 +52,7 @@ return function (RouteBuilder $routes) use ($crud): void {
         $routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'login']);
         $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'logout']);
         $routes->scope('/notes', ['_namePrefix' => 'notes:', 'controller' => 'Notes'], $crud());
-        $routes->scope('/note-tree', ['_namePrefix' => 'note-tree:', 'controller' => 'NoteRelationships'], $crud());
+        $routes->scope('/relationships', ['_namePrefix' => 'relationships:', 'controller' => 'NoteRelationships'], $crud());
     });
 
     $routes->prefix('Api', ['_namePrefix' => 'api:'], static function (RouteBuilder $routes) {

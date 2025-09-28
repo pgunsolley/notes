@@ -14,14 +14,24 @@ class NoteRelationshipsViewListener extends BaseListener
     public function startup(): void
     {
         $action = $this->_action();
-        $action->setConfig('scaffold.page_title', 'NoteTree');
+        $action->setConfig('scaffold.page_title', 'Relationships');
         $actionName = $this->_request()->getParam('action');
+
         if ($actionName === 'index') {
             $action->setConfig('scaffold.fields', [
                 'parent.body' => ['title' => 'Parent'],
                 'child.body' => ['title' => 'Child'],
             ]);
         }
+
+        if (in_array($actionName, ['index', 'view'])) {
+            $action->setConfig('scaffold.actions', [
+                'view' => ['url' => ['_name' => 'relationships:view']],
+                'edit' => ['url' => ['_name' => 'relationships:edit']],
+                'delete' => ['url' => ['_name' => 'relationships:delete']],
+            ]);
+        }
+
         if (in_array($actionName, ['add', 'view', 'edit'])) {
             $action->setConfig('relatedModels', false);
             $notes = $this
