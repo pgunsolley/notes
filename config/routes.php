@@ -58,6 +58,7 @@ return function (RouteBuilder $routes) use ($crud): void {
     $routes->prefix('Api', ['_namePrefix' => 'api:'], static function (RouteBuilder $routes) {
         $routes->registerMiddleware('api-authentication', new AuthenticationMiddleware(new ApiAuthenticationServiceProvider()));
         $routes->applyMiddleware('api-authentication');
+
         $routes->prefix('V1', ['_namePrefix' => 'v1:'], static function (RouteBuilder $routes) {
             $routes->post('/authenticate', ['controller' => 'Users', 'action' => 'authenticate'], 'authenticate');
             $routes->resources('Notes');

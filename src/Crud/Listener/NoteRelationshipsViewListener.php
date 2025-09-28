@@ -54,4 +54,18 @@ class NoteRelationshipsViewListener extends BaseListener
             ]);
         }
     }
+
+    public function beforeRender()
+    {
+        $viewVars = $this->_controller->viewBuilder()->getVars();
+        if (array_key_exists('associations', $viewVars)) {
+            $associations = $viewVars['associations'];
+            if (array_key_exists('manyToOne', $associations)) {
+                foreach (array_intersect(['Parents', 'Children'], array_keys($associations['manyToOne'])) as $assocName) {
+                    $associations['manyToOne'][$assocName]['controller'] = 'Notes';
+                }
+                $this->_controller()->set(compact('associations'));
+            }
+        }
+    }
 }

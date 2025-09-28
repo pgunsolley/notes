@@ -54,7 +54,7 @@ class NotesViewListener extends BaseListener
         }
     }
     
-    public function beforeRender(EventInterface $event)
+    public function beforeRender()
     {
         $viewVars = $this->_controller->viewBuilder()->getVars();
         if (array_key_exists('associations', $viewVars)) {
