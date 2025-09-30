@@ -25,8 +25,8 @@ class NotesViewListener extends BaseListener
         $relatedModelsListener = $this->_crud()->listener('relatedModels');
         $relatedModelsListener->relatedModels(['Parents', 'Children']);
 
-        $action = $this->_request()->getParam('action');
-        if ($action === 'view') {
+        $actionName = $this->_request()->getParam('action');
+        if ($actionName === 'view') {
             $this->_action()->setConfig('scaffold.fields_blacklist', ['parents._ids', 'children._ids']);
         }
     }

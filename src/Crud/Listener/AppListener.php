@@ -48,7 +48,6 @@ class AppListener extends BaseListener
         $this->_action()->setConfig('scaffold.tables', ['notes', 'note_relationships']);
         $this->_action()->setConfig('scaffold.sidebar_navigation', [
             new MenuItem('Notes', ['_name' => 'notes:index']),
-            new MenuItem('Relationships', ['_name' => 'relationships:index']),
         ]);
     }
 
