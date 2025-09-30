@@ -37,4 +37,9 @@ class NotePolicy
     {
         return $this->isIdentifierUserId($identity, $note);
     }
+
+    public function canUnlinkAssociated(Identity $identity, Note $note): bool
+    {
+        return $this->isIdentifierUserId($identity, $note);
+    }
 }

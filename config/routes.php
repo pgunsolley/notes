@@ -51,7 +51,16 @@ return function (RouteBuilder $routes) use ($crud): void {
         $routes->redirect('/', ['_name' => 'notes:index']);
         $routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'login']);
         $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'logout']);
-        $routes->scope('/notes', ['_namePrefix' => 'notes:', 'controller' => 'Notes'], $crud());
+        $routes->scope('/notes', ['_namePrefix' => 'notes:', 'controller' => 'Notes'], static function (RouteBuilder $routes) use ($crud) {
+            $crud()($routes);
+            $routes
+                ->connect('/unlink/{id}/{association}/{associatedId}', [
+                    'action' => 'unlinkAssociated',
+                ], [
+                    '_name' => 'unlink-associated',
+                    'association' => '(parents|children)',
+                ]);
+        });
     });
 
     $routes->prefix('Api', ['_namePrefix' => 'api:'], static function (RouteBuilder $routes) {

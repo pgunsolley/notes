@@ -65,10 +65,15 @@ foreach ($relations as $alias => $details) :
                                 <?= $this->Html->link(__d('crud', 'Edit'), ['plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'edit', ${$otherSingularVar}[$details['primaryKey']]], ['class' => 'btn btn-secondary']); ?>
                                 <?= $this->Form->postLink(
                                     __d('crud', 'Delete'),
-                                    ['plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'delete', ${$otherSingularVar}[$details['primaryKey']]],
+                                    [
+                                        '_name' => 'notes:unlink-associated',
+                                        'id' => $primaryKeyValue,
+                                        'association' => strtolower($alias),
+                                        'associatedId' => ${$otherSingularVar}[$details['primaryKey']],
+                                    ],
                                     [
                                         'class' => 'btn btn-danger btn-delete',
-                                        'confirm' => __d('crud', 'Are you sure you want to delete this record?'),
+                                        'confirm' => __d('crud', 'Are you sure you want to delete the association?'),
                                         'name' => '_delete',
                                     ]
                                 ); ?>
