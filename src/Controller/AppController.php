@@ -60,12 +60,13 @@ class AppController extends Controller
                     'className' => 'Crud.Bulk/Delete',
                 ],
             ],
-            'listeners' => [
-                'CrudView.View',
-                'Crud.Redirect',
-                'Crud.RelatedModels',
-                AppListener::class,
-            ],
         ]);
+
+        if ($this->Crud->isActionMapped()) {
+            $this->Crud->addListener(AppListener::class, AppListener::class);
+            $this->Crud->addListener('CrudView.View');
+            $this->Crud->addListener('Crud.Redirect');
+            $this->Crud->addListener('Crud.RelatedModels');
+        }
     }
 }

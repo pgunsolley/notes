@@ -15,21 +15,19 @@ class AppListener extends BaseListener
 {
     public function beforeFilter()
     {
-        if ($this->_crud()->isActionMapped()) {
-            $this->manageUtilityNavigation();
-            $this->manageSidebarNavigation();
-            $this->manageFormFields();
-            $this->manageTitle();
-            $this->manageBulkActions();
-        }
+        $this->manageUtilityNavigation();
+        $this->manageSidebarNavigation();
+        $this->manageFormFields();
+        $this->manageTitle();
+        $this->manageBulkActions();
     }
 
     public function beforeRender()
     {
-        if ($this->_crud()->isActionMapped()) {
-            $this->manageCrudViewClass();
-        }
+        $this->manageCrudViewClass();
     }
+
+    // TODO: Add hook that redirects to index on delete if current action is 'view' or 'edit'
 
     protected function manageBulkActions()
     {

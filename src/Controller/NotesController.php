@@ -24,10 +24,10 @@ class NotesController extends AppController
     {
         parent::initialize();
         if ($this->Crud->isActionMapped()) {
-            $this->Crud->addListener('FindByIdentityListener', FindByIdentityListener::class);
-            $this->Crud->addListener('SetIdentifierListener', SetIdentifierListener::class);
-            $this->Crud->addListener('NotesViewListener', NotesViewListener::class);
-            $this->Crud->addListener('EntityAuthorizationListener', EntityAuthorizationListener::class);
+            $this->Crud->addListener(FindByIdentityListener::class, FindByIdentityListener::class);
+            $this->Crud->addListener(SetIdentifierListener::class, SetIdentifierListener::class);
+            $this->Crud->addListener(NotesViewListener::class, NotesViewListener::class);
+            $this->Crud->addListener(EntityAuthorizationListener::class, EntityAuthorizationListener::class);
         }
     }
 
