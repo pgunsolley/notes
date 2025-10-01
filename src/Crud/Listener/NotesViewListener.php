@@ -31,7 +31,6 @@ class NotesViewListener extends BaseListener
         }
     }
 
-    // TODO: Consider refactoring into AppListener
     public function relatedModel(EventInterface $event)
     {
         $subject = $event->getSubject();

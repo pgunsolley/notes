@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Crud\Listener;
 
+use Cake\Event\EventInterface;
 use Cake\Routing\Router;
 use Crud\Listener\BaseListener;
 use CrudView\Menu\MenuItem;
@@ -27,7 +28,13 @@ class AppListener extends BaseListener
         $this->manageCrudViewClass();
     }
 
-    // TODO: Add hook that redirects to index on delete if current action is 'view' or 'edit'
+    public function beforeRedirect(EventInterface $event)
+    {
+        $actionName = $this->_request()->getParam('action');
+        if ($actionName === 'delete') {
+            $event->getSubject()->url = ['action' => 'index'];
+        }
+    }
 
     protected function manageBulkActions()
     {
