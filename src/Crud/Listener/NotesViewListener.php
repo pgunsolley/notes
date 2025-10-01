@@ -7,6 +7,7 @@ namespace App\Crud\Listener;
 use App\Crud\Listener\IdentityAwareTrait;
 use Cake\Event\EventInterface;
 use Cake\ORM\Query\SelectQuery;
+use Cake\Utility\Inflector;
 use Crud\Listener\BaseListener;
 
 class NotesViewListener extends BaseListener
@@ -64,6 +65,19 @@ class NotesViewListener extends BaseListener
                     $associations['manyToMany'][$assocName]['controller'] = 'Notes';
                 }
                 $this->_controller()->set(compact('associations'));
+            }
+        }
+    }
+
+    public function beforeSave(EventInterface $event)
+    {
+        $entity = $event->getSubject()->entity;
+        foreach (['parent', 'child'] as $assocQuery) {
+            $assocId = $this->_request()->getQuery($assocQuery);
+            if ($assocId !== null) {
+                $associated = $this->_model()->get($assocId);
+                $this->_controller->Authorization->authorize($associated);
+                $entity->{Inflector::pluralize($assocQuery)}[] = $associated;
             }
         }
     }
