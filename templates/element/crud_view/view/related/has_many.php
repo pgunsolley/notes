@@ -1,7 +1,13 @@
 <?php
 use Cake\Utility\Inflector;
 
-$renderField = fn(string $field) => in_array($field, ['body']);
+$isFieldAllowed = fn(string $field) => in_array($field, ['body']);
+
+$foreignKeyToAssocationName = fn(string $foreignKey) => match($foreignKey) {
+    'note_a' => 'parent',
+    'note_b' => 'child',
+    default => throw new InvalidArgumentException($foreignKey . ' is not a valid association'),
+};
 
 if (empty($associations['manyToMany'])) {
     $associations['manyToMany'] = [];
@@ -14,12 +20,21 @@ $relations = array_merge($associations['oneToMany'], $associations['manyToMany']
 
 $i = 0;
 foreach ($relations as $alias => $details) :
+    $aliasSingular = Inflector::singularize($alias);
     $otherSingularVar = $details['propertyName'];
     ?>
     <div class="related">
-        <h3><?= __d('crud', 'Related {0}', [Inflector::humanize($details['controller'])]); ?></h3>
+        <h3><?= __d('crud', '{0} Notes', [$aliasSingular]); ?></h3>
         <div class="actions-wrapper mb-3">
-            <?= $this->CrudView->createRelationLink($alias, $details, ['class' => 'btn btn-secondary']);?>
+            <?= $this->Html->link(__('Create New {0}', [$aliasSingular]), [
+                '_name' => 'notes:add',
+                '?' => [
+                    $foreignKeyToAssocationName($details['foreignKey']) => $this->CrudView->getViewVar('primaryKeyValue'),
+                    '_redirect_url' => $this->CrudView->getView()->getRequest()->getUri()->getPath(),
+                ],
+            ], [
+                'class' => 'btn btn-secondary',
+            ]) ?>
         </div>
         <?php
         if (${$viewVar}->{$details['entities']}) :
@@ -35,7 +50,7 @@ foreach ($relations as $alias => $details) :
                         }
 
                         foreach ($otherFields as $field) {
-                            if ($renderField($field)) {
+                            if ($isFieldAllowed($field)) {
                                 echo '<th>' . Inflector::humanize($field) . '</th>';
                             }
                         }
@@ -53,7 +68,7 @@ foreach ($relations as $alias => $details) :
                             foreach ($otherFields as $field) {
                                 ?>
                                 <?php 
-                                    if ($renderField($field)) {
+                                    if ($isFieldAllowed($field)) {
                                         echo '<td>' . $this->CrudView->process($field, ${$otherSingularVar}) . '</td>';
                                     }
                                 ?>
