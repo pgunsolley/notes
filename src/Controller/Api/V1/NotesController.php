@@ -18,8 +18,10 @@ class NotesController extends ApiController
     public function initialize(): void
     {
         parent::initialize();
-        $this->Crud->addListener('FindByIdentityListener', FindByIdentityListener::class);
-        $this->Crud->addListener('SetIdentifierListener', SetIdentifierListener::class);
-        $this->Crud->addListener('EntityAuthorizationListener', EntityAuthorizationListener::class);
+        if ($this->Crud->isActionMapped()) {
+            $this->Crud->addListener('FindByIdentityListener', FindByIdentityListener::class);
+            $this->Crud->addListener('SetIdentifierListener', SetIdentifierListener::class);
+            $this->Crud->addListener('EntityAuthorizationListener', EntityAuthorizationListener::class);
+        }
     }
 }
