@@ -12,7 +12,7 @@ use CrudView\Menu\MenuItem;
 /**
  * App-wide CrudView state management
  */
-class AppListener extends BaseListener
+class CrudViewListener extends BaseListener
 {
     public function beforeFilter()
     {

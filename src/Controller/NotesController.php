@@ -5,7 +5,7 @@ namespace App\Controller;
 
 use App\Crud\Listener\EntityAuthorizationListener;
 use App\Crud\Listener\FindByIdentityListener;
-use App\Crud\Listener\NotesViewListener;
+use App\Crud\Listener\Notes\CrudViewListener;
 use App\Crud\Listener\SetIdentifierListener;
 use Cake\Datasource\Exception\InvalidPrimaryKeyException;
 use Cake\Datasource\Exception\RecordNotFoundException;
@@ -26,7 +26,7 @@ class NotesController extends AppController
         if ($this->Crud->isActionMapped()) {
             $this->Crud->addListener(FindByIdentityListener::class, FindByIdentityListener::class);
             $this->Crud->addListener(SetIdentifierListener::class, SetIdentifierListener::class);
-            $this->Crud->addListener(NotesViewListener::class, NotesViewListener::class);
+            $this->Crud->addListener(CrudViewListener::class, CrudViewListener::class);
             $this->Crud->addListener(EntityAuthorizationListener::class, EntityAuthorizationListener::class);
         }
     }

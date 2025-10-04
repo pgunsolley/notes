@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Crud\Listener;
+namespace App\Crud\Listener\NoteRelationships;
 
 use App\Crud\Listener\IdentityAwareTrait;
 use Crud\Listener\BaseListener;
 
-class NoteRelationshipsViewListener extends BaseListener
+class CrudViewListener extends BaseListener
 {
     use IdentityAwareTrait;
 

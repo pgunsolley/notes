@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
-use App\Crud\Listener\AppListener;
+use App\Crud\Listener\CrudViewListener;
 use Cake\Controller\Controller;
 use Crud\Controller\ControllerTrait;
 
@@ -63,7 +63,7 @@ class AppController extends Controller
         ]);
 
         if ($this->Crud->isActionMapped()) {
-            $this->Crud->addListener(AppListener::class, AppListener::class);
+            $this->Crud->addListener(CrudViewListener::class, CrudViewListener::class);
             $this->Crud->addListener('CrudView.View');
             $this->Crud->addListener('Crud.Redirect');
             $this->Crud->addListener('Crud.RelatedModels');

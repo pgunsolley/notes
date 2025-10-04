@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\Database\Query\SelectQuery;
+use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -106,5 +106,14 @@ class NotesTable extends Table
     public function findByUserId(SelectQuery $query, string $userId): SelectQuery
     {
         return $query->where(['user_id' => $userId]);
+    }
+
+    public function findWithChildren(SelectQuery $query, int $depth = 1): SelectQuery
+    {
+        if ($depth < 1) {
+            return $query;
+        }
+
+        return $query->contain(join('.', array_fill(0, $depth, 'Children')));
     }
 }

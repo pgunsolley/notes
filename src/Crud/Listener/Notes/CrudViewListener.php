@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Crud\Listener;
+namespace App\Crud\Listener\Notes;
 
 use App\Crud\Listener\IdentityAwareTrait;
 use Cake\Event\EventInterface;
@@ -10,7 +10,7 @@ use Cake\ORM\Query\SelectQuery;
 use Cake\Utility\Inflector;
 use Crud\Listener\BaseListener;
 
-class NotesViewListener extends BaseListener
+class CrudViewListener extends BaseListener
 {
     use IdentityAwareTrait;
 
