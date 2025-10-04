@@ -114,6 +114,7 @@ class NotesTable extends Table
             return $query;
         }
 
+        // TODO: Use lower-level API (joins, or pure SQL)
         return $query->contain(join('.', array_fill(0, $depth, 'Children')));
     }
 }
