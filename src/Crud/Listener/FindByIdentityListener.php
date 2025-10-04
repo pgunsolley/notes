@@ -7,9 +7,6 @@ use Cake\Event\EventInterface;
 use Cake\ORM\Query\SelectQuery;
 use Crud\Listener\BaseListener;
 
-/**
- * @deprecated Use \App\Crud\Listener\FinderListener
- */
 class FindByIdentityListener extends BaseListener
 {
     use IdentityAwareTrait;
